@@ -10,9 +10,9 @@
   ```Javascript 
   wx.downloadFile({
       url: filepath,
-      // url:"https://www.ufa.hk/uploads/ufa/fit/DecOrderVO/3468830325178368.pdf",
+      // url:"https://www. .../uploads/ufa/fit/DecOrderVO/3468830325178368.pdf",
       success: function (res) {
-    
+  
         //保存文件到本地
         wx.saveFile({
           tempFilePath: res.tempFilePath,
@@ -70,3 +70,81 @@
   代码中,```Javasctipt ${wx.env.USER_DATA_PATH} ```是小程序自带的文件系统用户目录路径, 若在小程序开发助手上,点击详情->文件系统->usr目录中,若在手机端上,则在tencent\MicroMsg\wxanewfiles\.....; 另外,开发中还遇到一个小知识点,是文件下载下来之后打印出来,在开发助手上看是http://..........,用手机调试发现是wxFile://.......,不用太过纠结,这只是两种不同的协议.
 * 第三个点是要写一个数据字典选择的组件
 * 第四个点是写一个类似于购物车功能的实现,其实没用到什么,它的大致需求是这样的,A页面(主页面),进入B页面(选择物料页面),填写物料信息后,点击保存,这个时候返回A页面,在A页面中最后调用接口保存时也将B页面的物料信息提交上去.在数据未提交给后端的时候,需要把已填写的数据给缓存起来,之后提交成功或者没有提交返回到上一个页面需要把缓存清除,否则会报错.
+
+2020年3月16日
+------------
+前两天看了个实现瀑布流的视频，今天想着实现下，总结如下：（三个方法）
+html中，我是这么写的： 
+```html
+<div class="warp">
+    <div class="item"><img src="../../assets/images/0.png" /></div>
+    <div class="item"><img src="../../assets/images/1.png" /></div>
+    <div class="item"><img src="../../assets/images/2.png" /></div>
+    <div class="item"><img src="../../assets/images/3.jpg" /></div>
+    <div class="item"><img src="../../assets/images/4.png" /></div>
+</div>
+```
+* 第一个方法：用jquery实现动态的瀑布流布局，在页面获取到图片资源后渲染出效果;
+具体思路是：通过获取图片资源，循环数组，数组第一行无需再加定位操作；从第二行开始，图片相对父元素绝对定位，找到目前为止高度最小的一列，将图片插入那一列中，那一列的高度加上图片的高度，再进入下一个循环。
+```vue.js
+  mounted() {
+    this.waterFall();
+  },
+  methods: {
+    waterFall() {
+      var box = $(".item");
+      var boxWidth = $(box).outerWidth() + 5; //outerWidth() jquery方法 返回的width包含padding和border，如果要加上margin，则传'true'参数
+      var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth; // 保证兼容性
+      // var windowWidth = $(window).width();
+      var cols = Math.floor(windowWidth / boxWidth);
+      var heightArr = [];
+      $.each(box,function(index,item){
+        let boxHeight = $(item).outerHeight() + 5;
+        if(index < cols) {
+          heightArr[index] = boxHeight;
+        } else {
+          let minboxHeight = Math.min(...heightArr);
+          let i = heightArr.indexOf(minboxHeight);
+          item.style.position = 'absolute';
+          item.style.top = minboxHeight + "px";
+          item.style.left = i*boxWidth + 'px';
+          // item.style = ({
+          //   position: "absolute",
+          //   top: minboxHeight + "px",
+          //   left: i*boxWidth + 'px'
+          // });
+          heightArr[i] += boxHeight;
+        }
+      })
+    }
+  }
+```
+* 第二个方法： 用column来布局，在父元素中设置column-count列数
+```scss
+.warp {
+    column-count: 4;
+    .item {
+      border: solid 1px #f2f2f2;
+      margin: 5px;
+      img {
+        width: 100%;
+      }
+    }
+  }
+```
+* 第三个方法： 用flex弹性布局，定义flex-flow属性，flex-flow即flex-direction和flex-wrap的复合属性
+```scss
+.warp {
+    display: flex;
+    flex-flow: column wrap;
+    height: 100vh;
+    .item {
+      width: calc(100%/4  - 10px);
+      margin: 5px;
+      img {
+        width: 100%;
+      }
+    }
+}
+```
+* 总结上面三个方法，个人觉得用column布局和flex布局都很方便，用jquery布局的，图片从第二行开始是绝对布局，会脱离文档流，当加载的图片很多的时候，很难控制父元素的height值，无法滚动下拉。
