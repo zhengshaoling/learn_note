@@ -153,3 +153,239 @@ html中，我是这么写的：
 
 #### 封装了下vue 穿梭框组件
 具体看github,因为之前公司有一个需求，需要一个穿梭狂，原本想用vue-element-admin里封装好的，发现它这个组件写的实在有限，所以就自己粗略写了一个。
+
+2021年3月3日
+------------
+#### px rpx rem em的区别
+* px 相对长度单位： 相对显示器屏幕分辨率而言
+* em 相对长度单位： 相对于当前对象内文本的字体尺寸
+    1. 任意浏览器的默认字体为16px，即: 1em=16px => 0.625em=10px,在body中声明Font-size=62.5%，这样 16px*62.5%=10px,即12px=1.2em,10px=1em
+    2. em的值不是固定的，它会继承父级元素的字体大小
+* rem 相对长度单位： 相对于根元素（root em)
+    1. IE8及更早版本不支持
+* rpx 小程序解决自适应屏幕尺寸的尺寸单位，小程序规定屏幕宽度为750rpx
+    1. 小程序同时支持rem尺寸单位，小程序规定屏幕宽度为20rem, 1rem=(750/20)rpx=37.5rpx
+* upx uni-app使用upx为尺寸单位，uni-app规定屏幕基准宽度750upx
+
+#### css样式的应用
+ ```css
+  <!-- 逐渐消失的样式 -->
+    .truncate-text-multiline {
+        overflow: hidden;
+        display: block;
+        height: 109.2px;
+        margin: 0 auto;
+        font-size: 26px;
+        line-height: 1.4;
+        width: 400px;
+        position: relative;
+    }
+    .truncate-text-multiline:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 150px;
+        height: 36.4px;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0), #f5f6f9 50%);
+    }
+  <!-- 列表计数器 -->
+    ul {
+    counter-reset: counter;
+    }
+    li::before {
+    counter-increment: counter;
+    content: counters(counter, '.') ' ';
+    }
+   <!-- 自定义文本选择样式 -->
+    ::selection {
+        background: aquamarine;
+        color: black;
+    }
+    .custom-text-selection::selection {
+        background: deeppink;
+        color: white;
+    }
+    <!-- 创建动态阴影 -->
+    .dynamic-shadow {
+        position: relative;
+        width: 10rem;
+        height: 10rem;
+        background: linear-gradient(75deg, #6d78ff, #00ffb8);
+        z-index: 1;
+    }
+    .dynamic-shadow::after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: inherit;
+        top: 0.5rem;
+        filter: blur(0.4rem);
+        opacity: 0.7;
+        z-index: -1;
+    }
+    <!-- 更改子项聚焦时，父类的外观 -->
+    form {
+        border: 3px solid #2d98da;
+        color: #000000;
+        padding: 4px;
+    }
+    form:focus-within {
+        background: #f7b731;
+        color: #000000;
+    } 
+    <!-- 给p标签添加渐变颜色 -->
+    .gradient-text {
+        background: -webkit-linear-gradient(pink, red);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+    }
+
+  ```
+
+#### vue 如何实现数据的实时渲染
+##### 通过发布者订阅者这个设计模式
+* 发布者：数据  
+* 订阅者：Watch(3种：render Wathcer    computed Watcher    user Watcher）
+###### render Watch
+
+#### vue 依赖包
+前阵子发现项目越跑越慢，编译的很慢，有时候切换个分支就会报错，想着可能是依赖包太大了，于是整理了下并删掉一些没有用的：
+* vue-json-editor：旧的编辑器  quill，vue-quill-editor：目前在用的编辑器
+* el-bigdata-table：大数据表格渲染（未用到）
+* id-validator：中国大陆身份证校验器（未用到）
+* pdfobject：PDF预览插件
+* vue-draggable-resizable-gorkys：缩放插件
+* vue-bus: 用于组件间的通信
+* vue-json-editor: json编辑器
+* vue-json-tree-view：有配置但是木有用到
+* jsencrypt：对数据进行加密（wk有用到）
+* codemirror：代码高亮（系统参数）
+* lockr：本地存储插件，配合i18n，用于语言切换等
+* numeral：数据格式化
+* nzh：数字跟中文转换插件（wk有用到）
+* pinyin-match：拼音match(wk有用到)
+* qrcodejs2：生成二维码插件
+* vue-cropper：截取图片（wk用于头像截取）
+* vue-draggable-resizable：拖拽插件
+* vuedraggable: 拖拽插件
+* vue-radial-progress：进度条(wk有用)
+* Lockr: vue插件 用于操作localStorage，本地存储对象、数组、数字、字符串，提供多种方法：
+  1. Lockr.prefix 给键值添加前缀
+  2. Lockr.set 设置值（类型可以为String,Number,Array,Object)
+  3. Lockr.get 通过键值返回值，可以指定默认返回值
+  4. Lockr.rm 完全删除键值对
+  5. Lockr.sadd 在原来数值的基础上追加值
+  6. Lockr.sismember 判断指定键是否存在某个值（验证下是否只能是String,Number)
+  7. Lockr.srem 移除指定键的某个值
+  8. Lockr.getAll 获取localStorage所有键值对
+
+#### 埋点功能
+前阵子公司项目里产品提需求：要统计每个功能模块的使用次数，于是引入：埋点，做的过程中总结以下问题（以公司CRM项目为基础）
+* 埋点根据功能编码，初步想通过登录后返回的权限功能数组，发现有一部分页面是公共模块，没有配权限编码，因此通过在路由中meta属性中增加字段，如下（vue-element PC端）：
+```javascript
+var funcBm = '';
+var findFuncBm = function(target) {
+  let menus = JSON.parse(localStorage.getItem('menus'));
+  if(!menus || menus.length == 0) return;
+  funcBm = '';
+  console.debug('menus',menus)
+  menus.forEach((item)=>{
+    item.children.forEach((cItem)=>{
+      if(cItem.path == target.path) {
+        funcBm = cItem.funcBm;
+        return;
+      }
+    })
+  })
+}
+
+// 功能使用记录
+export function logFuncUseLog(target){
+  console.debug('target', target)
+  // 获取功能编码
+  if(target.meta.funcBm) funcBm = target.meta.funcBm;
+  else findFuncBm(target);
+
+  return new Promise((resolve, reject)=>{
+    try{
+      resolve()
+      if(funcBm) {
+        handleSetUseLog(funcBm).then((res) =>{
+        }).catch((err) => {
+          console.log('统计使用次数报错了', err)
+        })
+      }
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
+```
+以上方法置于路由跳转之前调用
+```javascript
+Router.beforeEach((to, from, next) => {
+  // console.debug(to, from)
+  const pageErrorList = ['/login', '/500', '/502', '/11', '/403', '/404']
+  if (checkNull(Store.getters.userInfo) && pageErrorList.indexOf(to.path) < 0) {
+    getUserInfo().then(res => {
+      const {data, code} = res.data
+      if (res.status === 200 && res.data.code === 0) {
+        Store.commit("SET_USERIFNO", data);
+        localStorage.setItem('userInfo', JSON.stringify(data))
+        logFuncUseLog(to).then(() => {
+          next()
+        });
+      } else {
+        if (localStorage.getItem('isLoginFlag')) {
+          Notification({
+            message: '获取信息失败,请重新登录',
+            type: 'error'
+          })
+          localStorage.removeItem("isLoginFlag");
+        }
+        next('/login')
+      }
+    }).catch(res => {
+      console.error(res)
+    });
+  } else {
+    logFuncUseLog(to).then(() => {
+      next({replace: true})
+    })
+
+  }
+})
+```
+* 在小程序端，小程序端是个体力活动了，需要到每个页面去，在onShow中手动调用方法从而实现埋点
+  除了有一点，接口需要通过header传参，把功能编码传递给后端的，小程序的请求用了flyio，flyio中已设置了拦截器，在不改变原来配置的基础上，只能另起一个文件（不能跟其它接口放置同个文件中），重新配置需要的headers参数，如下：
+  ```javascript
+  export function handleSetUseLog(data) {
+    request.interceptors.request.use((request) => {
+        // request.headers['analyseCode'] = data
+        request.headers = {
+            "content-type": "application/json",
+            'Admin-Token': wx.getStorageSync('token'),
+            "Client-Type": "APP",
+            "token": wx.getStorageSync('token'),
+            "Span-Session": getApp() ? getApp().globalData.spanSession : null,
+            'analyseCode': data,
+            "version": config.version,
+        }
+    });
+    return request.request({
+        url: `user/func/use/l_log`,
+        method: 'GET'
+    })
+  }
+  ```
+
+#### 小程序实现纵横向可滑动，横向滑动时奇数行固定，纵向滑动时顶部底部固定，效果如下:
+![Image text](./image/sticky.gif)
+
+#### websocket实时监听消息
+
+#### 大屏
+![Image text](https://s31.aconvert.com/convert/p3r68-cdx67/9o6hg-hqs55.gif)
+<!-- ![Image text](./image/print.gif) -->
