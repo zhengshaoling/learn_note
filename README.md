@@ -387,5 +387,4 @@ Router.beforeEach((to, from, next) => {
 #### websocket实时监听消息
 
 #### 大屏
-![Image text](https://s31.aconvert.com/convert/p3r68-cdx67/9o6hg-hqs55.gif)
-<!-- ![Image text](./image/print.gif) -->
+![Image text](./image/print.gif)
