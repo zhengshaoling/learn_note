@@ -382,9 +382,139 @@ Router.beforeEach((to, from, next) => {
   ```
 
 #### 小程序实现纵横向可滑动，横向滑动时奇数行固定，纵向滑动时顶部底部固定，效果如下:
-![Image text](./image/sticky.gif)
+<!-- ![Image text](./image/sticky.gif) -->
+* 采用sticky布局，写一个scroll-view，支持横纵向滚动
+                                view.block1（放左右固定的行，粘性定位，宽度100vw）
+scroll-view -> view(相对定位) -<                                                                        view.header(粘性布局)
+                                view.block2（放上下滚动的内容，margin-left: 100vw） -> view(相对定位) ->  view.main 
+                                                                                                        view.footer（粘性布局）
+                                                                                                        
+#### 小程序实现左列固定，右列可横向滚动，总体可纵向滚动，纵向滚动时顶部底部固定，效果如下：
+
 
 #### websocket实时监听消息
 
-#### 大屏
-![Image text](./image/print.gif)
+
+#### 大屏，效果如下
+<!-- ![Image text](./image/print.gif) -->
+* 通过一个平台做成，平台上引入了：
+  1. echart图表
+  2. [echarts-liquidfill水球图（案例）]](https://www.jianshu.com/p/2ebb1591cedc)，[echarts-liquidfill水球图（github）]](https://github.com/ecomfe/echarts-liquidfill)
+  3. [轮播插件（案例）]](https://www.dowebok.com/demo/188/index6.html)，[轮播插件（github）]](https://github.com/omcg33/jquery.limarquee)
+* 这个大屏中，需要写随机数展示，根据节假日工作日、时间点判断展示不同用户数，代码如下（只加了2021年的）
+  ```javascript
+  function getWeekDate() {
+      var now = new Date();
+      var day = now.getDay();
+      var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+      var week = weeks[day];
+      return (week == '星期日' || '星期六') ? 'holiday' : 'weekday';
+  }
+  function get_time(a) {
+      return new Date(a).getTime() / 1000; 
+  }
+
+  function getWorkingDay() {
+      var now = new Date().getTime()/1000; //获取当前时间戳,精确到秒,示例:1570463999
+      
+      var nowDate = new Date();
+      var year = nowDate.getFullYear();
+      var month = nowDate.getMonth() + 1 < 10 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1;
+      var day = nowDate.getDate() < 10 ? "0" + nowDate.getDate() : nowDate.getDate();
+      var dateStr = year + "-" + month + "-" + day;
+
+      var time_10_01 = get_time("2021/10/01 00:00:00");  //节假日时间
+      var time_10_07 = get_time("2021/10/07 23:59:59");
+      var time_09_19 = get_time("2021/09/19 00:00:00");
+      var time_09_20 = get_time("2021/09/20 23:59:59");
+      var time_06_12 = get_time("2021/06/12 00:00:00");
+      var time_06_13 = get_time("2021/06/13 23:59:59");
+      var time_05_01 = get_time("2021/05/01 00:00:00");
+      var time_05_04 = get_time("2021/05/04 23:59:59");
+      var time_04_03 = get_time("2021/04/03 00:00:00");
+      var time_04_04 = get_time("2021/04/04 23:59:59");
+      var time_02_11 = get_time("2021/02/11 00:00:00");
+      var time_02_16 = get_time("2021/02/16 23:59:59");
+      
+      //获取时间戳
+      //判断
+      if(now > time_10_01 && now < time_10_07 ||
+          now > time_09_19 && now < time_09_20 || 
+          now > time_06_12 && now < time_06_13 || 
+          now > time_05_01 && now < time_05_04 || 
+          now > time_04_03 && now < time_04_04 ||
+          now > time_02_11 && now < time_02_16) {
+          return 'holiday'
+      } else if(dateStr == '2021-02-07' ||
+          dateStr == '2021-02-20' ||
+          dateStr == '2021-04-25' ||
+          dateStr == '2021-05-08' ||
+          dateStr == '2021-09-18' ||
+          dateStr == '2021-09-26' ||
+          dateStr == '2021-10-09') {
+          return 'weekday'
+      } else if(new Date().getDay() == '6' || new Date().getDay() == '0'){
+          return 'holiday'
+      } else{
+          return 'weekday'
+      }
+  }
+  ```
+* 通过一些插件包实现了很多动态效果，其中也加了很多css动态样式：
+  1. 每个分块区域上的动态效果，上面的亮点图，左右来回移动
+  ```css
+  .normal_box1:before {
+    content: url(/img-light-2.png);
+    position: absolute;
+    animation: rotation 4.5s infinite alternate;
+    top: -25px;
+    left: -100px;
+    opacity: 0.8;
+  }
+  @-webkit-keyframes rotation {
+    0% {
+        transform: translateX(0);
+   }
+    100% {
+        transform: translateX(350px);
+   }
+  }
+  ```
+  2. 背景色渐变的样式，在div::before 设置60度渐变背景色
+  ```css
+  .blue-border::before {
+    background-image: linear-gradient(60deg, #00c2ff, #0575e6, #007bff, #021b79);
+    background-size: 300%;
+    content: '';
+    position: absolute;
+    width: calc(100% + 1%);
+    height: calc(100% + 4%);
+    border-radius: 0.5em;
+    z-index: -1;
+    animation: animate_bg 5s infinite;
+  }
+  @-webkit-keyframes animate_bg {
+    0%, 100% {
+      background-position: 0%, 50%;
+    }
+    50% {
+      background-position: 100%, 50%;
+    }
+  }
+  ```
+  3. 设置文字渐变且动态改变
+  ```css
+  .blue-border {
+    animation: animate_text_blue 2s linear infinite alternate;
+  }
+  @-webkit-keyframes animate_text_blue {
+    0% {
+      color: #00c2ff;
+    }
+    100% {
+      color: #021b79;
+    }
+  }
+  ```
+
+
