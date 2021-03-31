@@ -1,0 +1,20 @@
+@import "./static/colorui/main.wxss";
+@import "./static/colorui/icon.wxss";
+page{
+	--main-color: #00428e; /*主色调*/
+  --title-color: #666666; /*标题黑色*/
+  --subtitle-color: #8f8f8f; /*子标题灰色*/
+  --list-title-color: #1c1c1c; /*列表标题颜色*/
+  --list-action-color: #8f8f8f; /*列表内容颜色*/
+	--error-color: #eb6161; /*错误提示颜色*/
+}
+page {
+  height: 100%;
+  overflow: hidden;
+}
+.btn-height-80 {
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  border-radius: 10rpx;
+}
