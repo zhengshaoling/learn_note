@@ -1,0 +1,27 @@
+{
+  "name": "nuxt-seo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/proxy": "^2.1.0",
+    "core-js": "^3.9.1",
+    "css-loader": "^5.2.0",
+    "element-ui": "^2.15.1",
+    "nuxt": "^2.15.3",
+    "postcss": "^7.0.32",
+    "sass-loader": "^10.1.1",
+    "style-loader": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1"
+  }
+}
