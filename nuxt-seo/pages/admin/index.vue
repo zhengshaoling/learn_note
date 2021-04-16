@@ -4,7 +4,6 @@
         <div class="label">header descriptions: {{header.descriptions}}</div>
         <div class="label">header keyword: {{header.keyword}}</div>
         <z-button type="primary" size="medium">测试</z-button>
-
     </div>
 </template>
 <script>
