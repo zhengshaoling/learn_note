@@ -2,6 +2,44 @@
 =========
 2021年4月19日
 ----------------
+
+#### 监听页面刷新以及强制关闭方法
+1. 产品提出需求，在进编辑页面的时候需要给页面加上锁，不让其他人进入编辑。一开始，我只是在入口处调用接口，进入页面后，通过钩子beforeDestroy释放锁。后面发现，进到页面后，在当前页面强制关闭页签，是不会走beforeDestroy这个钩子的，故引入第2点；
+2. 页面created钩子里增加beforeunload监听，destroyed钩子里取消改监听，代码如下：
+```javascript 
+  created() {
+    window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
+  },
+  beforeDestroy () {
+    this.releaseLock();
+  },
+  destroyed () {
+    window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
+  },
+  methods: {
+    beforeunloadFn() {
+      this.releaseLock();
+    },
+    releaseLock() {
+      // 调用接口释放锁
+    }
+  }
+```
+以上方法实现了路由跳转时、浏览器页签关闭以及重新刷新之后的释放锁，但是~重新刷新的时候用户的页面还是会在编辑页面的，这个时候没有锁了，别的用户就也能进来编辑了，不允许，于是引入第3点：
+3. 在页面挂载**请求页面数据完**之后，**页面重新渲染完成之后**再请求一次加锁的接口。
+```javascript 
+  if(!localStorage.getItem('actProLockHash')) {
+    this.$nextTick(()=>{
+      that.handleViewProjectDetail(that.projectInfo.actInfoHash, that.projectInfo.id)
+    })
+  }
+```
+以上，就可以啦~~
+4. **2021年4月20日补充：**但是但是，beforeunload,unload事件数据浏览器事件，同时也没有相应的规范，不同浏览器会有不同的写法，好坑。而且，beforeunload事件不是任意时候都能触发的，需要进到页面后，有页面的交互之后关闭浏览器页签或者刷新，才能触发。
+5. 还有一点，原本beforeunload的出现，是为了弹框提示关闭浏览器，这里用来加异步请求，百度了下看到其他人发过的疑问，ajax请求是不支持的，axios是可以的，具体原理还不清楚。虽然axios支持，但是axios方法之后的then方法还没有进去，页签就己经关闭了。
+
+#### pxCook 用于量设计图尺寸的神器
+
 #### iframe初体验
 一直以来只知道iframe可以嵌套别的网页进自己的项目页面中，这次公司的项目刚好有个需求可以用iframe实现，实现过程中才发现有些问题和用法，总结如下：
 1. iframe有load事件，通过load可以调用postMessage()将cookie/userInfo等传递过去，如下：
@@ -9,9 +47,9 @@
 2. 每次切换页签回来，iframe中的内容不会被加进缓存，每次都需要重新请求页面，会有空白页面的效果，此时iframe里没有内容，宽高不够，需要写死一个最小高度和100%宽度来撑开。
   * 因为iframe中的内容不属于节点的信息，keep-alive对iframe中的内容无效。
   * 在网上看到的一个解决方法： 在主界面下router-view以外渲染iframe，通过v-show控制显隐，后面想想可行性，觉得不太可行：
-    在app.vue中，router-view 以外渲染iframe, iframe页面中没有定义在page文件夹中的公用页面，侧边栏、顶部、底部和登录页锁屏页404页等等，需要自己在iframe中配，感觉工作量增大不小，不太可行。
+    在app.vue中，router-view 以外渲染iframe, iframe页面中没有定义在page文件夹中的公用页面，侧边栏、顶部、底部和登录页锁屏页404页等等，需要自己在iframe中配，感觉工作量增大不小且肯定会有其他问题，因此不采取。
 
-#### wangeditor自定义功能
+#### wangeditor扩展功能
 
 
 2021年4月1日
