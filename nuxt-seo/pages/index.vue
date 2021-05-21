@@ -1,6 +1,7 @@
 <template>
   <div class="container linear-gradient-bg">
     <div class="box"></div>
+
   </div>
 </template>
 

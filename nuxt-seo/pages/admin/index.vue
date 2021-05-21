@@ -1,16 +1,21 @@
 <template>
     <div id="admin">
-        <div class="label">header title: {{header.title}}</div>
-        <div class="label">header descriptions: {{header.descriptions}}</div>
-        <div class="label">header keyword: {{header.keyword}}</div>
-        <z-button type="primary" size="medium">测试</z-button>
+        <div class="label">header title: {{header.title || 'title'}}</div>
+        <div class="label">header descriptions: {{header.descriptions || 'descriptions'}}</div>
+        <div class="label">header keyword: {{header.keyword || 'keyword'}}</div>
+        <z-button type="primary" size="medium" @click="openDialog">测试</z-button>
+      
+        <warm-pop :pop="dialogVisible" title="测试弹窗title"  centerTitle="测试弹窗centerTitle" :closeImg="true" :icon="0"
+                @close="dialogVisible = false">
+          <z-button slot="btn" type="warning" @click="test">确定</z-button>
+          <z-button slot="btn" @click="dialogVisible = false">取消</z-button>
+      </warm-pop>
+
     </div>
 </template>
 <script>
-import zButton from '../../components/common/zButton'
 export default {
     name: 'Admin-Index',
-    components: { zButton },
     async asyncData(app) {
         let url = 'http://10.10.31.60:8088/service/cust/seo/p_getSeoData'
         let param = {
@@ -27,8 +32,6 @@ export default {
         } catch(e) {
             console.log('asyncData错误', e)
         }
-
-
     },
     head() {
         return {
@@ -48,8 +51,24 @@ export default {
     },
     data() {
         return {
-
+            dialogVisible: false
         }
+    },
+    methods: {
+        openDialog() {
+            this.dialogVisible = !this.dialogVisible;
+        },
+      async test() {
+        let res = await this.$axios.post('/cust/seo/p_getSeoData', {
+          "title": "众业达商城 找回密码",
+          "keyword": "description 众业达商城 找回密码",
+          "descriptions": "ome page description 众业达商城 找回密码 seo"
+        })
+        if(res){
+          this.$message.success('请求成功');
+          this.dialogVisible = false;
+        }
+      }
     }
 }
 </script>

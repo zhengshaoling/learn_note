@@ -1,3 +1,13 @@
+let ENV_BASE_API = 'http://10.10.31.60:8088'; // 请求路径
+let BASE_IMG_PATH = '/img/' // 静态图片资源
+// 测试环境
+if(process.env.NODE_ENV == 'test') {
+  ENV_BASE_API = '';
+}
+// 生产环境
+if(process.env.NODE_ENV == 'prod') {
+  ENV_BASE_API = '' ;
+}
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -18,12 +28,16 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    '@/assets/css/common.css'
+    'assets/css/common.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/warmPop',
+    '@/plugins/zButton',
+    { src: '~/plugins/common.js', ssr: false },
+    { src: "~/plugins/axios/request.js",ssr: true },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -46,28 +60,24 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
-    retry: { retries: 3 },
-    //开发模式下开启debug
-    debug: process.env._ENV == "production" ? false : true,
-    //设置不同环境的请求地址
-    baseURL:
-      process.env._ENV == "production"
-        ? "http://10.10.31.61:8088/service/"
-        : "http://10.10.31.61:8088/service/",
-    withCredentials: true,
-    headers: { 'Content-Type': 'application/json', 'crossDomain': true },
-    timeout: 5000,
+    prefix: '/api/service'
   },
   proxy: {
-    '/api/': {
-      static: 'http://localhost:3000',
+    '/api': {
+      changeOrigin: true,
+      target: ENV_BASE_API,
       pathRewrite: {
         '^/api/': '/'
       }
     }
   },
+  server: {
+    port: 8523,
+    host: '0.0.0.0'
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],
+    vendor: ['axios']
   }
 }
