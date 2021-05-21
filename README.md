@@ -1,5 +1,15 @@
 学习笔记
 =========
+2021年5月21日
+----------------
+
+### gitconfig配置
+C盘下有个gitconfig配置，可以用来配置git显示的名称哦，直接改文件就能生效啦~
+
+### node_modules快速删除
+全局安装rimraf  命令：rimraf node_modules 就酱，3秒内就删掉了，再也不用管什么管理员权限啥的，删个文件删老久……
+
+
 2021年5月11日
 ----------------
 
@@ -40,17 +50,20 @@
     }
   }
 ```
-  以上方法实现了路由跳转时、浏览器页签关闭以及重新刷新之后的释放锁，但是~重新刷新的时候用户的页面还是会在编辑页面的，这个时候没有锁了，别的用户就也能进来编辑了，不允许，于是引入第3点.
+以上方法实现了路由跳转时、浏览器页签关闭以及重新刷新之后的释放锁，但是~重新刷新的时候用户的页面还是会在编辑页面的，这个时候没有锁了，别的用户就也能进来编辑了，不允许，于是引入第3点.
+
 3. 在页面挂载**请求页面数据完**之后，**页面重新渲染完成之后**再请求一次加锁的接口。
-```javascript 
-  if(!localStorage.getItem('actProLockHash')) {
-    this.$nextTick(()=>{
-      that.handleViewProjectDetail(that.projectInfo.actInfoHash, that.projectInfo.id)
-    })
-  }
-```
-以上，就可以啦~~
+  ```javascript 
+    if(!localStorage.getItem('actProLockHash')) {
+      this.$nextTick(()=>{
+        that.handleViewProjectDetail(that.projectInfo.actInfoHash, that.projectInfo.id)
+      })
+    }
+  ```
+  以上，就可以啦~~
+
 4. **2021年4月20日补充：** 但是但是，beforeunload,unload事件数据浏览器事件，同时也没有相应的规范，不同浏览器会有不同的写法，好坑。!!!现在测试的结果是：谷歌浏览器beforeunload事件不是任意时候都能触发的，需要进到页面后，有页面的交互之后关闭浏览器页签或者刷新，才能触发。
+
 5. **补充：** 原本beforeunload的出现，是为了弹框提示关闭浏览器，这里用来加异步请求，百度了下看到其他人踩过的坑，ajax请求是不支持的，axios是可以的，具体原理还不清楚。虽然axios支持，但是axios方法之后的then方法还没有进去，页签就己经关闭了。
 
 ### pxCook 用于量设计图尺寸的神器
