@@ -4,7 +4,7 @@
         <div class="label">header descriptions: {{header.descriptions || 'descriptions'}}</div>
         <div class="label">header keyword: {{header.keyword || 'keyword'}}</div>
         <z-button type="primary" size="medium" @click="openDialog">测试</z-button>
-      
+
         <warm-pop :pop="dialogVisible" title="测试弹窗title"  centerTitle="测试弹窗centerTitle" :closeImg="true" :icon="0"
                 @close="dialogVisible = false">
           <z-button slot="btn" type="warning" @click="test">确定</z-button>
@@ -59,7 +59,7 @@ export default {
             this.dialogVisible = !this.dialogVisible;
         },
       async test() {
-        let res = await this.$axios.post('/cust/seo/p_getSeoData', {
+        let res = await this.$axios.post('http://10.88.20.14:8523/api/service/' + 'cust/seo/p_getSeoData', {
           "title": "众业达商城 找回密码",
           "keyword": "description 众业达商城 找回密码",
           "descriptions": "ome page description 众业达商城 找回密码 seo"

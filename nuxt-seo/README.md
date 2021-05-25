@@ -71,7 +71,7 @@ Vue.component('z-button', zButton)
 ```
 2、nuxt.config.js中，通过process.env.NODE_ENV获取当前环境的参数，并做相关处理
 ```javascript
-  let ENV_BASE_API = 'http://10.10.31.60:8088'; // 请求路径
+  let ENV_BASE_API = 'http://10.88.20.14:8523/'; // 请求路径
   let BASE_IMG_PATH = '/img/' // 静态图片资源
   // 测试环境
   if(process.env.NODE_ENV == 'test') {

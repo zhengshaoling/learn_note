@@ -1,4 +1,4 @@
-let ENV_BASE_API = 'http://10.10.31.60:8088'; // 请求路径
+let ENV_BASE_API = 'http://10.88.20.14:8523/'; // 请求路径
 let BASE_IMG_PATH = '/img/' // 静态图片资源
 // 测试环境
 if(process.env.NODE_ENV == 'test') {
@@ -65,7 +65,7 @@ export default {
   proxy: {
     '/api': {
       changeOrigin: true,
-      target: 'http://10.88.20.14:8523/',
+      target: 'http://10.10.31.60:8088/',
       pathRewrite: {
         '^/api/': '/'
       }
