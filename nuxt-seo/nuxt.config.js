@@ -65,7 +65,7 @@ export default {
   proxy: {
     '/api': {
       changeOrigin: true,
-      target: ENV_BASE_API,
+      target: 'http://10.88.20.14:8523/',
       pathRewrite: {
         '^/api/': '/'
       }

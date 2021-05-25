@@ -49,6 +49,10 @@
         header: ''
       }
     },
+    created() {
+      debugger;
+      console.log('test', this.header)
+    },
     methods: {
       jumpToAdmin() {
         this.$router.push('/admin')
