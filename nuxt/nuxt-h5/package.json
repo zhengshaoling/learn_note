@@ -1,0 +1,41 @@
+{
+  "name": "nuxt-h5",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env process.env.ENV=dev nuxt",
+    "test": "cross-env process.env.ENV=test nuxt",
+    "prod": "cross-env process.env.ENV=production nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": "50913"
+    }
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/proxy": "^2.1.0",
+    "@popperjs/core": "^2.9.2",
+    "bootstrap": "^3.3.7",
+    "bootstrap-vue": "^2.21.2",
+    "core-js": "^3.9.1",
+    "cross-env": "^7.0.3",
+    "jquery": "^2.1.1",
+    "js-cookie": "^2.2.1",
+    "js-md5": "^0.7.3",
+    "nuxt": "^2.15.3",
+    "popper.js": "^1.16.1",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "node-sass": "^6.0.0",
+    "prettier": "^2.2.1",
+    "sass-loader": "^10.1.1"
+  }
+}

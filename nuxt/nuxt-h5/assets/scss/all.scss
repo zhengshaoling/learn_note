@@ -1,0 +1,22 @@
+//公共scss样式入口
+//导航navbar的padding
+$navbar-padding-y: 0;
+$navbar-padding-x: 0;
+//导航logo的padding
+$navbar-brand-padding-y: 0;
+//导航每一个item的padding
+$nav-link-padding-y: 0;
+//导航每一个item的margin
+$navbar-nav-link-padding-x: 26px;
+//alert margin
+$alert-margin-bottom: 0;
+
+.container {
+    max-width: 100% !important;
+}
+
+
+
+//最后需要重新引入样式依赖
+// @import "bootstrap/css/bootstrap.css";
+
