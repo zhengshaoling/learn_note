@@ -1,6 +1,15 @@
+/*
+ * @Author: your name
+ * @Date: 2021-06-17 20:50:37
+ * @LastEditTime: 2021-06-18 22:05:52
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \nuxt-h5\plugins\common.js
+ */
 import Vue from 'vue'
 // import md5 from 'js-md5';
 // Vue.prototype.$md5 = md5;
+
 
 
 // px转rem

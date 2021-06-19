@@ -588,7 +588,7 @@
               <div class="text">
                 基于专业可靠的图像处理和文字识别技术，客户根据需求可自由配置识别能力的OCR机器人，实现特定版式图片的结构化识别
               </div>
-              <a class="consult go-shangqiao-chat" @click="shangqiaoChat">
+              <a class="consult go-shangqiao-chat" @click="">
                 在线咨询
               </a>
             </div>

@@ -14,15 +14,12 @@
                         <div class="text-center context-box-title">账户登录</div>
                         <div>
                             <div class="form-group margin-t-1x">
-                                <input type="text" maxlength="50" autocomplete="off" class="form-control input-lg input-flat input-flat-user" placeholder="请输入账户名或账户ID" v-model="loginForm.account">
+                                <input type="text" maxlength="50" autocomplete="off" class="form-control input-flat input-flat-user" placeholder="请输入账户名或账户ID" v-model="loginForm.account">
                             </div>
                             <div class="form-group">
-                                <input type="password" autocomplete="off" class="form-control input-lg input-flat input-flat-lock" placeholder="请输入密码" v-model="loginForm.password" @keyup.enter="signIn">
+                                <input type="password" autocomplete="off" class="form-control  input-flat input-flat-lock" placeholder="请输入密码" v-model="loginForm.password" @keyup.enter="signIn">
                             </div>
-                            <!-- <div>
-                                <a @click="changeLogOrRegist">注册账户</a>                  
-                                <a class="float-right" href="/user/forget-password">忘记密码</a>
-                            </div> -->
+                           
                             <br>
                             <div class="form-group">
                                 <a class="handle-btn" @click="signIn">
@@ -41,36 +38,21 @@
                 <div v-else-if="logOrReg == 'loginByPhone'" class="context-box">
                     <div class="app-login-union">
                         <div class="text-center context-box-title">账号登录</div>
-                        <div>
+                        <form class="form-horizontal" id="loginByPhone">
+                            <div class="form-group">
+                                <label class="sr-only">手机号码</label>
+                                <input name="loginByPhoneMobile" type="text" maxlength="11" autocomplete="off" class="form-control input-flat input-flat-lock" placeholder="请输入手机号" v-model="loginByPhoneForm.mobile">
+                            </div>
                             <div class="form-group margin-t-1x">
                                 <div class="input-group">
-                                    <input type="text" maxlength="50" autocomplete="off" class="form-control input-lg input-flat input-flat-user" placeholder="请输入手机号" v-model="loginByPhoneForm.mobile">
+                                    <label class="sr-only">验证码</label>
                                     <div class="input-group-addon" @click="getCode">获取验证码</div>
+                                    <input name="loginByPhoneCode" type="text" maxlength="6" autocomplete="off" class="form-control input-flat input-flat-user" placeholder="请输入验证码" v-model="loginByPhoneForm.validateCode">
                                 </div>
-                                
                             </div>
-                            <div class="form-group">
-                                <input type="password" autocomplete="off" class="form-control input-lg input-flat input-flat-lock" placeholder="请输入验证码" v-model="loginByPhoneForm.validateCode">
-                            </div>
-                        <!-- <form class="form-inline">
-                            <div class="form-group has-success has-feedback">
-                                <input type="text" class="form-control" id="inputSuccess4" aria-describedby="inputSuccess4Status" v-model="loginByPhoneForm.mobile">
-                                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                                <span id="inputSuccess4Status" class="sr-only">(success)</span>
-                            </div>
-                            <div @click="getCode">获取验证码</div>
-                            <button type="submit" class="btn btn-primary" :loading="loading.getCode" >获取验证码</button>
-                        </form>
-                        <form class="form-inline">
-                            <div class="form-group has-success has-feedback">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="inputGroupSuccess3" aria-describedby="inputGroupSuccess3Status" v-model="loginByPhoneForm.validateCode">
-                                </div>
-                                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                                <span id="inputGroupSuccess3Status" class="sr-only">(success)</span>
-                            </div>
-                        </form> -->
+                            <!-- <button class="btn btn-primary" @click="getCode">获取验证码</button> -->
                         
+                    
                             <div class="form-group">
                                 <a class="handle-btn" @click="signInByPhone">
                                     <span v-if="!loading.signInByPhone">登录</span>
@@ -80,51 +62,14 @@
                                     </span>
                                 </a>
                             </div>
-                        </div>
+                        </form>
                     
                         <div class="text-center pointer mg-bottom-xs blue-text-btn" @click="changeLogOrRegist('loginByPwd')">账号密码登录</div>
                         <div class="text-center color-gray pointer" @click="changeLogOrRegist('regist')">注册账户</div>
                     </div>
                 </div>
-                <div v-else  class="context-box">
-                    <div class="app-login-union">
-                        <div class="text-center context-box-title">注册账户</div>
-                        <div>
-                            <div class="form-group margin-t-1x">
-                                <input type="text" maxlength="50" autocomplete="off" class="form-control input-lg input-flat input-flat-user" placeholder="请输入账户名" v-model="registForm.account">
-                            </div>
-                            <div class="form-group margin-t-1x">
-                                <input type="text" maxlength="50" autocomplete="off" class="form-control input-lg input-flat input-flat-user" placeholder="请输入昵称" v-model="registForm.nickName">
-                            </div>
-                            <div class="form-group margin-t-1x">
-                                <input type="text" maxlength="50" autocomplete="off" class="form-control input-lg input-flat input-flat-user" placeholder="请输入邮箱" v-model="registForm.email">
-                            </div>
-                            <div class="form-group margin-t-1x">
-                                <input type="text" maxlength="50" autocomplete="off" class="form-control input-lg input-flat input-flat-user" placeholder="请输入手机号码" v-model="registForm.mobile">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" autocomplete="off" class="form-control input-lg input-flat input-flat-lock" placeholder="请输入密码" v-model="registForm.password">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" autocomplete="off" class="form-control input-lg input-flat input-flat-lock" placeholder="请再次输入密码" v-model="confirmPassword">
-                            </div>
-                            <!-- <div>
-                                <a @click="changeLogOrRegist">注册账户</a>                  
-                                <a class="float-right" href="/user/forget-password">忘记密码</a>
-                            </div> -->
-                            <br>
-                            <div class="form-group">
-                                <a class="handle-btn" @click="regist">
-                                    <span v-if="!loading.regist">注册</span>
-                                    <span v-if="loading.regist">
-                                        <!-- <img src="https://static.intsig.net/dps/img/ai/loading-2.svg" class="loading-img" style="width:20px"/> -->
-                                        <span>注册中</span>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="text-center color-gray pointer" @click="changeLogOrRegist('loginByPwd')">已有账号，点击登录</div>
-                    </div>
+                <div v-else class="context-box">
+                    <div></div>
                 </div>
             </div>
             
@@ -142,7 +87,6 @@ export default {
             logOrReg: 'loginByPwd',
             loading: {
                 signIn: false,
-                regist: false,
                 signInByPhone: false,
                 getCode: false
             },
@@ -154,32 +98,18 @@ export default {
                 validateCode: '',
                 mobile: ''
             },
-            registForm: {
-                account: "",
-                email: "",
-                mobile: "",
-                nickName: "",
-                password: ""
-            }
+            SignInByPhoneValidator: null,
+            getCodeValidator: null
         }
     },
     created() {
         console.log('Vue $md5', md5('string'))
     },
     methods: {
-        getCode() {
-            let mobile = this.loginByPhoneForm.mobile;
-            this.loading.getCode = true;
-            getRequest(`/validate/sms/${mobile}`).then((res) => {
-                this.loading.getCode = false;
-                console.log('获取验证码返回res',res);
-                alert('获取验证码成功')
-            }).catch((err) => {
-                console.log(err, 'err')
-            })
-        },
+        
         changeLogOrRegist(txt) {
-            this.logOrReg = txt;
+            if(txt == 'regist') this.$router.push('/regist')
+            else this.logOrReg = txt;
         },
         signIn() {
             let loginForm = {
@@ -198,7 +128,75 @@ export default {
                 this.loading.signIn = false;
             })
         },
-        async signInByPhone() {
+        initSignInByPhone() {
+            $('#loginByPhone').bootstrapValidator({
+                message : '请检查输入框是否合法',
+                feedbackIcons : {
+                    valid : 'glyphicon glyphicon-ok',
+                    invalid : 'glyphicon glyphicon-remove',
+                    validating : 'glyphicon glyphicon-refresh'
+                },
+                fields : {
+                    loginByPhoneMobile: {
+                        message : '手机号码不能为空',
+                        validators : {
+                            notEmpty : {
+                                message : '手机号码不能为空'
+                            },
+                            stringLength : {
+                                min : 11,
+                                max : 11,
+                                message : '请输入11位手机号码'
+                            },
+                            regexp : {
+                                regexp : /^1[3|5|7|8]{1}[0-9]{9}$/,
+                                message : '请输入正确的手机号码'
+                            }
+                        }
+                    },
+                    loginByPhoneCode: {
+                        message : '验证码不能为空',
+                        validators : {
+                            notEmpty : {
+                                message : '验证码不能为空'
+                            },
+                            stringLength : {
+                                min : 6,
+                                max : 6,
+                                message : '验证码长度为6'
+                            },
+                        }
+                    }
+                }
+            });
+        },
+        signInByPhone() {
+            this.initSignInByPhone();
+            let SignInByPhoneValidator = $("#loginByPhone").data('bootstrapValidator');
+            SignInByPhoneValidator.validate();
+            if(SignInByPhoneValidator.isValid()) this.handleSignInByPhone();
+            else return;
+        },
+        
+        
+        getCode() {
+            let mobile = this.loginByPhoneForm.mobile;
+            if(!mobile) return;
+            this.handleGetCode();
+        },
+        handleGetCode() {
+            let mobile = this.loginByPhoneForm.mobile;
+            
+            this.loading.getCode = true;
+            getRequest(`/validate/sms/${mobile}`).then((res) => {
+                this.loading.getCode = false;
+                console.log('获取验证码返回res',res);
+                alert('获取验证码成功')
+            }).catch((err) => {
+                console.log(err, 'err')
+            })
+        },
+        async handleSignInByPhone() {
             this.loading.signInByPhone =  true;
             let checkCode = {
                 key: this.loginByPhoneForm.mobile,
@@ -222,20 +220,7 @@ export default {
             }
             
         },
-        regist() {
-            this.loading.regist = true;
-            let registForm = this.registForm;
-            postRequest('/login/reg',JSON.stringify(registForm)).then((res)=>{
-                this.loading.regist = false;
-                console.log('登录返回res',res);
-                alert('注册成功，自动登录中……')
-                Cookies.set('userInfo', JSON.stringify(res));
-                this.$router.push('/')
-            }).catch((err) => {
-                this.loading.regist = false;
-                alert('注册失败')
-            })
-        }
+       
     }
 }
 </script>
@@ -311,8 +296,6 @@ a {
 }
 .app-auth-container .input-flat {
     font-size: 0.85rem;
-    border: 0.016rem solid #e0e3ec;
-    box-shadow: none;
 }
 .input-lg {
     height: 2.8rem;
@@ -324,11 +307,6 @@ a {
     width: 100%;
     height: 2.2rem;
     padding: 0.5rem 9pt;
-    background-color: #fff;
-    background-image: none;
-    border: 0.016rem solid #ccc;
-    box-shadow: inset 0 0.016rem 0.016rem rgba(0, 0, 0, 0.8);
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 .form-control, output {
     display: block;

@@ -1,4 +1,12 @@
-let  processEnvTarget = 'http://lyaiserver.vipgz6.idcfengye.com';
+/*
+ * @Author: your name
+ * @Date: 2021-06-17 20:50:37
+ * @LastEditTime: 2021-06-18 23:11:21
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \nuxt-h5\nuxt.config.js
+ */
+let  processEnvTarget = 'http://callmee.e2.luyouxia.net:24911';
 const webpack = require('webpack')
 // import $ from 'jquery'
 export default {
@@ -18,17 +26,20 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       // { rel: 'stylesheet', type: 'text/css', href: 'bootstrap/css/bootstrap.min.css' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css' },
-    ],
+      { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.css' }
+    ], 
     script: [
       { src: 'https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js' },
       // { src: 'node_modules/js/bootstrap.min.js' },
       { src: 'https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js' },
       // { src: 'bootstrap/js/bootstrap.min.js' }
+      { src: 'https://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js' }
   ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    'bootstrap/dist/css/bootstrap.min.css'
     // '~/assets/scss/all.scss'
   ],
   // bootstrapVue: {
@@ -80,10 +91,13 @@ export default {
     host: '0.0.0.0'
   },
   build: {
-    plugins: [
-     new webpack.ProvidePlugin({
-       '$': 'jquery'
-     })
-   ]
+//     vendor: ['axios', 'jquery', 'bootstrap'],
+//     plugins: [
+//      new webpack.ProvidePlugin({
+//        '$': 'jquery',
+//         jQuery: 'jquery',
+//         'window.JQuery': 'jquery'
+//      })
+//     ]
   }
 }
