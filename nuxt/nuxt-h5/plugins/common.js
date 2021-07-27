@@ -9,8 +9,8 @@
 import Vue from 'vue'
 // import md5 from 'js-md5';
 // Vue.prototype.$md5 = md5;
-
-
+import $ from 'jquery'
+Vue.use($)
 
 // px转rem
 // var docEle = document.documentElement,

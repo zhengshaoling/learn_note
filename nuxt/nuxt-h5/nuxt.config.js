@@ -10,7 +10,7 @@ let  processEnvTarget = 'http://callmee.e2.luyouxia.net:24911';
 const webpack = require('webpack')
 // import $ from 'jquery'
 export default {
-  
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'nuxt-h5-seo',
@@ -24,14 +24,13 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      // { rel: 'stylesheet', type: 'text/css', href: 'bootstrap/css/bootstrap.min.css' },
-      { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css' },
+      // { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.css' }
-    ], 
+    ],
     script: [
       { src: 'https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js' },
       // { src: 'node_modules/js/bootstrap.min.js' },
-      { src: 'https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js' },
+      // { src: 'https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js' },
       // { src: 'bootstrap/js/bootstrap.min.js' }
       { src: 'https://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js' }
   ]
@@ -91,13 +90,13 @@ export default {
     host: '0.0.0.0'
   },
   build: {
-//     vendor: ['axios', 'jquery', 'bootstrap'],
-//     plugins: [
-//      new webpack.ProvidePlugin({
-//        '$': 'jquery',
-//         jQuery: 'jquery',
-//         'window.JQuery': 'jquery'
-//      })
-//     ]
+    vendor: ['axios', 'jquery', 'bootstrap'],
+    plugins: [
+     new webpack.ProvidePlugin({
+       '$': 'jquery',
+        jQuery: 'jquery',
+        'window.JQuery': 'jquery'
+     })
+    ]
   }
 }
