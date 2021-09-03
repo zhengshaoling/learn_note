@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-01 10:27:39
+ * @LastEditTime: 2021-08-09 16:53:36
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \nuxt-seo\nuxt.config.js
+ */
 let ENV_BASE_API = 'http://10.88.20.14:8523/'; // 请求路径
 let BASE_IMG_PATH = '/img/' // 静态图片资源
 // 测试环境
@@ -59,18 +67,9 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    proxy: true,
-    prefix: '/api/service'
+    proxy: true
   },
-  proxy: {
-    '/api': {
-      changeOrigin: true,
-      target: 'http://10.10.31.60:8088/',
-      pathRewrite: {
-        '^/api/': '/'
-      }
-    }
-  },
+  
   server: {
     port: 8523,
     host: '0.0.0.0'

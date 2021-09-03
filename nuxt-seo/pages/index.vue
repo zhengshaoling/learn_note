@@ -1,6 +1,17 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-04-01 10:27:39
+ * @LastEditTime: 2021-08-09 16:52:43
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \nuxt-seo\pages\index.vue
+-->
 <template>
   <div class="container linear-gradient-bg">
-    <div class="box"></div>
+    <div class="box">
+      <nuxt-link class="txt-white" to="/admin">后台</nuxt-link>
+      <nuxt-link class="txt-white" to="/map">地图</nuxt-link>
+    </div>
 
   </div>
 </template>
@@ -50,8 +61,7 @@
       }
     },
     created() {
-      debugger;
-      console.log('test', this.header)
+
     },
     methods: {
       jumpToAdmin() {
@@ -65,5 +75,14 @@
 .box {
   height: 100vh;
   width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.txt-white {
+  color: #fff;
+  font-size: 18px;
+  margin: 5px;
+  text-decoration: none;
 }
 </style>

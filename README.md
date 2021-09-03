@@ -1,6 +1,54 @@
 学习笔记
 =========
 
+2021年9月3日
+----------------
+### 关于登录鉴权
+#### HTTP 无状态协议，即每次请求都是独立的，无法获取上一次请求的状态数据。
+1. HTTP Auth Authentication: 请求时携带验证信息，该方法安全性能不高
+2. 服务端存储session，客户端存cookie
+3. JWT: header中传token
+4. OAuth: 用于颁发令牌（token)，有4种授权方式
+  * 授权码 authorization code（通过code授权码、redirect_uri回调网址，例子可看下企业微信提供的授权API）
+  * 隐藏式 implicit
+  * 密码式
+  * 客户端凭证
+### 关于nuxt内存溢出问题
+#### nuxt初次使用，用到现在，记录下问题
+1. nuxt生命周期跟vue的有所不同，nuxt
+2. nuxt生命周期执行了两次
+3. nuxt内存溢出问题
+4. 打包方式与vue有所不同
+4. nuxt ayncData header新增钩子的使用
+5. 引入外部插件方法有所不同，因为nuxt是在服务端渲染之后返回给客户端，可能存在以下问题：   
+  * 服务端无法获取到windows对象，如果插件包中存在关于客户端操作方法的，则会报错不支持，应该分开两种方式，一种只作用于客户端，一种作用域服务端和客户端
+  * 特殊情况特殊处理，如vue-meditor md编辑器的引入方法，如下
+  ```javascript
+    export default {
+      build: {
+        vendor: ['axios'],
+        // md文件编辑器： 去掉这个的话，会报无法引入外部资源的错
+        transpile: ['vue-meditor']
+      }
+    }
+  ```
+6. nuxt内置就已经引入了store状态存储，无须再自己另外引入，跟vue同，都可支持模块化，getters等
+7. nuxt需要在nuxt.config.js中配置env配置，才能保证在page，js中通过process.env.XXX来获取环境变量
+  ```javascript
+  const NUXT_ENV = {
+    NODE_ENV: process.env.NODE_ENV,
+    VUE_APP_BASE_URL: process.env.VUE_APP_BASE_URL,
+    VUE_APP_BASE_PORT: process.env.VUE_APP_BASE_PORT,
+    VUE_APP_SERVER_API: process.env.VUE_APP_SERVER_API,
+    VUE_APP_WS_URL: process.env.VUE_APP_WS_URL,
+    VUE_APP_WS_PORT: process.env.VUE_APP_WS_PORT,
+    VUE_APP_WEBSOCKET_API: process.env.VUE_APP_WEBSOCKET_API,
+  }
+  export default {
+      env: NUXT_ENV,
+  }
+  ```
+8. nuxt项目部署方法有所不同，
 2021年7月23日
 ----------------
 ## 隔好久没写了欸，总结下最近的情况吧

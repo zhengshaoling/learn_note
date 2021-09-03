@@ -15,6 +15,7 @@
     "@nuxtjs/proxy": "^2.1.0",
     "core-js": "^3.9.1",
     "css-loader": "^5.2.0",
+    "echarts": "^5.1.2",
     "element-ui": "^2.15.1",
     "node-sass": "^5.0.0",
     "nuxt": "^2.15.3",
