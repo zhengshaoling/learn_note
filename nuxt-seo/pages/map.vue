@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-09 16:51:23
- * @LastEditTime: 2021-09-14 14:33:59
+ * @LastEditTime: 2021-09-14 17:11:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \nuxt-seo\pages\map.vue
@@ -36,7 +36,11 @@ export default {
                                 y: 0,
                                 x2: 0,
                                 y2: 1,
-                                colorStops: getColorStops(colors),
+                                colorStops: [{
+                                        offset: 0, color: '#28cccc' // 0% 处的颜色
+                                }, {
+                                        offset: 1, color: '#00428e' // 100% 处的颜色
+                                }],
                                 global: true
                                 }
                         }
@@ -54,9 +58,32 @@ export default {
                                 geo: { // 作为底图，设置地图外围边框
                                         map: 'china',
                                         itemStyle: {
-                                                areaColor: 'rgba(255,255,255,0)',
-                                                borderColor: '#28cccc',
+                                                areaColor: 'rgba(255, 255, 255, 0.05)',
+                                                borderColor: '#0195ba',
                                                 borderWidth: 1,
+                                        },
+                                         emphasis: { // 鼠标悬停时样式
+                                                label: {
+                                                        color: '#fff'
+                                                },
+                                                focus: 'self', // 鼠标悬浮时 默认none， self会高亮自己，虚化其它的
+                                                itemStyle: { // 高亮时的样式
+                                                        areaColor: '#00c3d5',
+                                                        borderType: 'solid',
+                                                        borderColor: '#8bdbff',
+                                                        shadowColor: 'rgba(255, 255, 255, 0.5)',
+                                                        shadowBlur: 10
+                                                }
+                                        },
+                                        select: { // 选中时样式
+                                                label: {
+                                                        color: '#fff'
+                                                },
+                                                itemStyle: {
+                                                        areaColor: 'rgba(0, 60, 131, 0.7)',
+                                                        borderType: 'solid',
+                                                        borderColor: '#8bdbff',
+                                                }
                                         },
                                 },
                                 series: [{
@@ -83,6 +110,7 @@ export default {
                                                 label: {
                                                         color: '#fff'
                                                 },
+                                                focus: 'self',
                                                 itemStyle: {
                                                         areaColor: '#00c3d5',
                                                         borderType: 'solid',
@@ -101,20 +129,30 @@ export default {
                                         },
                                         data: that.convertScatterData(mapSereisData.list)
                                 }],
+                                // 设置视觉映射组件
                                 visualMap: {
-                                        type: "continuous",
+                                        type: "continuous", // 连续型，还有
                                         min: 0,
                                         max: 1200,
                                         circulable: true,
                                         inRange: {
                                                 color: ['#50a3ba', '#eac736', '#d94e5d']
                                         },
-                                        left: '2px',
+                                        left: '10%',
+                                        bottom: '10%',
                                         // 配置文字样式
                                         textStyle: {
                                                 color: "#fff",
                                                 fontSize: "12px",
-                                        }
+                                        },
+                                        formatter: function (value) {
+                                                return '数量' + value; // 范围标签显示内容。
+                                        },
+                                        text: [1200,0], // 顶部底部的文字
+                                        textGap: 15,
+                                        dimension: 2, // 将value 索引值为2的映射到视觉元素上
+                                        hoverLink: true, // 高亮地图元素
+
                                 },
                                 tooltip: this.getTooltip()  
                         }
@@ -168,7 +206,7 @@ export default {
                       return {
                                 show: true,
                                 formatter: function (params) {
-                                        if (params.value != params.value) return "";
+                                        // if (params.value != params.value) return "";
                                         let f = '<div style="line-height: 30px; width: 110px; font-weight: bold; margin: 10px 0 10px 20px;"><div style="color: #fff; font-size: 24px; border-bottom: 1px solid #fff;">' +
                                                 params.name + 
                                                 '</div>' + 
@@ -189,6 +227,6 @@ export default {
 #Map {
         height: 100vh;
         width: 100vw;
-        background: #001d3dde;
+        background: url('/img/center/bg.jpg') center center;
 }
 </style>
