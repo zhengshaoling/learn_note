@@ -1,15 +1,13 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-09 16:51:23
- * @LastEditTime: 2021-09-14 17:38:41
+ * @LastEditTime: 2021-09-17 10:45:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \nuxt-seo\pages\map.vue
 -->
 <template>
-        <div id="Map">
-
-        </div>
+        <div id="Map"></div>
 </template>
 <script>
 import * as echarts from 'echarts'
