@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-01 10:27:39
- * @LastEditTime: 2021-08-09 16:53:36
+ * @LastEditTime: 2021-09-17 09:46:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \nuxt-seo\nuxt.config.js
@@ -44,8 +44,10 @@ export default {
     '@/plugins/element-ui',
     '@/plugins/warmPop',
     '@/plugins/zButton',
-    { src: '~/plugins/common.js', ssr: false },
+    { src: '~/plugins/common.js', ssr: false }, // 全局配置入口，该文件中的配置在服务端不生效
     { src: "~/plugins/axios/request.js",ssr: true },
+    { src: '~/plugins/lib/util', ssr: true }, // 用于注册公用方法
+    { src: '~/plugins/lib/protoFun', ssr: true } // 用于增加原型方法
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

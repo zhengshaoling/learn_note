@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-09 16:51:23
- * @LastEditTime: 2021-09-14 17:11:59
+ * @LastEditTime: 2021-09-14 17:38:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \nuxt-seo\pages\map.vue
@@ -20,7 +20,8 @@ export default {
         data() {
                 return {
                        myChart: null,
-                       nowIndex: -1
+                       nowIndex: -1,
+                       interval: null
                 }
         },
         mounted() {
@@ -84,7 +85,7 @@ export default {
                                                         borderType: 'solid',
                                                         borderColor: '#8bdbff',
                                                 }
-                                        },
+                                        }
                                 },
                                 series: [{
                                         type: 'scatter',
@@ -106,7 +107,8 @@ export default {
                                                 borderType: [2, 4],
                                                 borderDashOffset: 4
                                         },
-                                        emphasis: { // 鼠标悬停时样式
+                                        // 鼠标悬停时样式
+                                        emphasis: { 
                                                 label: {
                                                         color: '#fff'
                                                 },
@@ -117,7 +119,8 @@ export default {
                                                         borderColor: '#8bdbff',
                                                 }
                                         },
-                                        select: { // 选中时样式
+                                        // 选中时样式
+                                        select: { 
                                                 label: {
                                                         color: '#fff'
                                                 },
@@ -157,9 +160,22 @@ export default {
                                 tooltip: this.getTooltip()  
                         }
                         this.myChart.setOption(option);
-                        setTimeout(()=>{
+                        this.myChart.on('mousemove', function() {
+                                if(that.interval) {
+                                        clearInterval(that.interval);
+                                        that.interval = null;
+                                }
+                        })
+                        this.myChart.on('mouseout', function(param) {
+                                if(param.event) {
+                                        that.interval = setInterval(()=>{
+                                                that.autoLoopTooTip();
+                                        }, 5000)
+                                }
+                        })
+                        this.interval = setInterval(()=>{
                                 this.autoLoopTooTip();
-                        }, 800)
+                        }, 5000)
                 },
                 convertScatterData(data) {
                         let res = [];
@@ -198,9 +214,7 @@ export default {
                                 seriesIndex: 0,
                                 dataIndex: this.nowIndex
                         });
-                        setTimeout(function () {
-                                that.autoLoopTooTip();
-                        }, 2000);
+                
                 },
                 getTooltip() {
                       return {
