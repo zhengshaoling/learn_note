@@ -1,7 +1,7 @@
 /*
  * @Author: linglingling
  * @Date: 2021-09-17 09:35:18
- * @LastEditTime: 2021-09-17 14:06:40
+ * @LastEditTime: 2021-09-22 15:39:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \nuxt-seo\plugins\lib\util.js
@@ -145,14 +145,14 @@ export function once(fn) {
  */ 
 export const inBrowser = typeof window !== "undefined";
 export const UA = inBrowser && window.navigator.userAgent.toLowerCase();
-export const isIE = UA && /msie|trident/.test(UA);
-export const isIE9 = UA && UA.indexOf("msie 9.0") > 0;
-export const isEdge = UA && UA.indexOf("edge/") > 0;
-export const isAndroid =  (UA && UA.indexOf("android") > 0) || weexPlatform === "android";
-export const isIOS =  (UA && /iphone|ipad|ipod|ios/.test(UA)) || weexPlatform === "ios";
-export const isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
-export const isPhantomJS = UA && /phantomjs/.test(UA);
-export const isFF = UA && UA.match(/firefox\/(\d+)/);
-export const isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;  
+// export const isIE = UA && /msie|trident/.test(UA);
+// export const isIE9 = UA && UA.indexOf("msie 9.0") > 0;
+// export const isEdge = UA && UA.indexOf("edge/") > 0;
+// export const isAndroid =  (UA && UA.indexOf("android") > 0) || weexPlatform === "android";
+// export const isIOS =  (UA && /iphone|ipad|ipod|ios/.test(UA)) || weexPlatform === "ios";
+// export const isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
+// export const isPhantomJS = UA && /phantomjs/.test(UA);
+// export const isFF = UA && UA.match(/firefox\/(\d+)/);
+// export const isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;  
     
 
