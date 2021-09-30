@@ -16,10 +16,10 @@
 ### 关于nuxt内存溢出问题
 #### nuxt初次使用，用到现在，记录下问题
 1. nuxt生命周期跟vue的有所不同，nuxt
-2. nuxt生命周期执行了两次
-3. nuxt内存溢出问题
+2. nuxt生命周期执行了两次, 目前发现使用v-if会有这种情况，换用v-show无
+3. nuxt内存溢出问题，
 4. 打包方式与vue有所不同
-4. nuxt ayncData header新增钩子的使用
+4. nuxt asyncData header新增钩子的使用
 5. 引入外部插件方法有所不同，因为nuxt是在服务端渲染之后返回给客户端，可能存在以下问题：   
   * 服务端无法获取到windows对象，如果插件包中存在关于客户端操作方法的，则会报错不支持，应该分开两种方式，一种只作用于客户端，一种作用域服务端和客户端
   * 特殊情况特殊处理，如vue-meditor md编辑器的引入方法，如下
@@ -32,7 +32,44 @@
       }
     }
   ```
-6. nuxt内置就已经引入了store状态存储，无须再自己另外引入，跟vue同，都可支持模块化，getters等
+  * 全局引用封装组件，注意下，该组件的运行环境是否包括服务端，针对
+6. nuxt内置就已经引入了store状态存储，无须再自己另外引入，跟vue同，都可支持模块化，getters等。
+ ![img](./img/store-nuxt.png)
+  * store目录下除了index文件不是具名文件，其余都是，在调用的时候需要带上文件名，如下：
+  ```javascript
+    this.$store.commit('upload'/'SET_WEBKIT_DIRECTORY', true);
+    const getters = {
+      device: state => state.device,
+      userInfo: state => state.user.userInfo
+    }
+  ```
+  * store文件写法：
+  ```javascript
+    export const state = () => ({
+      dict: Cookies.get('dict') || {}
+    })
+    export const mutations = {
+      SET_DICTINFO: (state, data) => {
+              state.dict = data;
+              Cookies.set('dict', data)
+      }
+    }
+    export const actions = {
+      // 获取数据字典
+      getSysDict({ commit, state }) {
+        return new Promise((resolve, reject) => {
+          // getUserInfo(state.token)
+          getDict().then(response => {
+            console.debug(response, 'response')
+            commit("SET_DICTINFO", response)
+            resolve(response)
+          }).catch(error => {
+            reject(error)
+          })
+        })
+      }
+    }
+  ```
 7. nuxt需要在nuxt.config.js中配置env配置，才能保证在page，js中通过process.env.XXX来获取环境变量
   ```javascript
   const NUXT_ENV = {
@@ -48,7 +85,17 @@
       env: NUXT_ENV,
   }
   ```
-8. nuxt项目部署方法有所不同，
+8. nuxt项目部署方法有所不同，服务端需要装pm2（当内存不够用时会自动重启，释放内存~）
+9. nuxt assets文件夹中的引用，引用方法如下
+、、、html
+  <template>
+    <img src="~/assets/img.png" />
+    <img :src="require(`~/assets/img/${image}.jpg`)" />
+  </template>
+```
+```css
+  background: url('~assets/banner.svg')
+```
 2021年7月23日
 ----------------
 ## 隔好久没写了欸，总结下最近的情况吧
