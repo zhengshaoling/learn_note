@@ -47,7 +47,9 @@ export default {
     { src: '~/plugins/common.js', ssr: false }, // 全局配置入口，该文件中的配置在服务端不生效
     { src: "~/plugins/axios/request.js",ssr: true },
     { src: '~/plugins/lib/util', ssr: true }, // 用于注册公用方法
-    { src: '~/plugins/lib/protoFun', ssr: true } // 用于增加原型方法
+    { src: '~/plugins/lib/protoFun', ssr: true }, // 用于增加原型方法
+    { src: '~/plugins/lib/echartUtil', ssr: true }, // 定义echart方法
+
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

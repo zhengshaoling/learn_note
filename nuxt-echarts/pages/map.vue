@@ -26,25 +26,6 @@ export default {
                 this.initChart();
         },
         methods: {
-                getLinearGradientColor(colors, defalultColor) {
-                        if (typeof colors == "string") return colors;
-                        if (Array.isArray(colors)) {
-                                return {
-                                type: 'linear',
-                                x: 0,
-                                y: 0,
-                                x2: 0,
-                                y2: 1,
-                                colorStops: [{
-                                        offset: 0, color: '#28cccc' // 0% 处的颜色
-                                }, {
-                                        offset: 1, color: '#00428e' // 100% 处的颜色
-                                }],
-                                global: true
-                                }
-                        }
-                        return defalultColor;
-                },
                 initChart() {
                         let that = this;
                         const geoJSON = {
@@ -56,16 +37,17 @@ export default {
                         let option = {
                                 geo: { // 作为底图，设置地图外围边框
                                         map: 'china',
+                                        silent: true, // 设置地图hover状态失效
                                         itemStyle: {
                                                 areaColor: 'rgba(255, 255, 255, 0.05)',
                                                 borderColor: '#0195ba',
                                                 borderWidth: 1,
                                         },
-                                         emphasis: { // 鼠标悬停时样式
+                                        emphasis: { // 鼠标悬停时样式
                                                 label: {
                                                         color: '#fff'
                                                 },
-                                                focus: 'self', // 鼠标悬浮时 默认none， self会高亮自己，虚化其它的
+                                                focus: 'none', // 鼠标悬浮时 默认none， self会高亮自己，虚化其它的
                                                 itemStyle: { // 高亮时的样式
                                                         areaColor: '#00c3d5',
                                                         borderType: 'solid',
@@ -76,7 +58,7 @@ export default {
                                         },
                                         select: { // 选中时样式
                                                 label: {
-                                                        color: '#fff'
+                                                        color: '#fff',
                                                 },
                                                 itemStyle: {
                                                         areaColor: 'rgba(0, 60, 131, 0.7)',
@@ -94,7 +76,7 @@ export default {
                                                         color: '#fff'
                                                 },
                                                 emphasis: {
-                                                        show: true,
+                                                        show: false,
                                                         color: '#fff',
                                                         fontSize: '12px'
                                                 }
@@ -110,7 +92,8 @@ export default {
                                                 label: {
                                                         color: '#fff'
                                                 },
-                                                focus: 'self',
+                                                // 鼠标悬浮时，只定位到当前
+                                                focus: 'self', 
                                                 itemStyle: {
                                                         areaColor: '#00c3d5',
                                                         borderType: 'solid',
@@ -137,7 +120,7 @@ export default {
                                         max: 1200,
                                         circulable: true,
                                         inRange: {
-                                                color: ['#50a3ba', '#eac736', '#d94e5d']
+                                                color: ['#eac736', '#50a3ba', '#28cccc']
                                         },
                                         left: '10%',
                                         bottom: '10%',

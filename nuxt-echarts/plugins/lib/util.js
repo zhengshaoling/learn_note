@@ -7,6 +7,7 @@
  * @FilePath: \nuxt-seo\plugins\lib\util.js
  */
 
+
 /**
  * 对象深拷贝
  */
@@ -119,17 +120,7 @@ export function __enableScroll() {
         document.onkeydown = null;
 }
 
-/**
- * 手动允许浏览器滚动
- * 调用方法如下：
-        function launchRocket() {
-                console.log("我已经执行了");
-        }
-        const launchRocketOnce = once(launchRocket);
-        launchRocketOnce();
-        launchRocketOnce();
-        launchRocketOnce();
- */ 
+
 export function once(fn) {
         let called = false;
         return function () {
