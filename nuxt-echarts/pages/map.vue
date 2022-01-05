@@ -22,7 +22,14 @@ export default {
                        interval: null
                 }
         },
+        created() {
+                console.log('mounted');
+        },
+        beforeDestroy() {
+                console.log('mounted');
+        },
         mounted() {
+                console.log('mounted');
                 this.initChart();
         },
         methods: {

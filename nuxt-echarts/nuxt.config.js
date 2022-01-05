@@ -8,6 +8,7 @@
  */
 let ENV_BASE_API = 'http://10.88.20.14:8523/'; // 请求路径
 let BASE_IMG_PATH = '/img/' // 静态图片资源
+
 // 测试环境
 if(process.env.NODE_ENV == 'test') {
   ENV_BASE_API = '';
@@ -16,12 +17,13 @@ if(process.env.NODE_ENV == 'test') {
 if(process.env.NODE_ENV == 'prod') {
   ENV_BASE_API = '' ;
 }
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'nuxt-seo',
+    title: 'nuxt-echarts',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'zh-CN'
     },
     meta: [
       { charset: 'utf-8' },
@@ -43,7 +45,6 @@ export default {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/warmPop',
-    '@/plugins/zButton',
     { src: '~/plugins/common.js', ssr: false }, // 全局配置入口，该文件中的配置在服务端不生效
     { src: "~/plugins/axios/request.js",ssr: true },
     { src: '~/plugins/lib/util', ssr: true }, // 用于注册公用方法

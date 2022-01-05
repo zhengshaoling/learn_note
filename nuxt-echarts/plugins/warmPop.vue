@@ -14,7 +14,7 @@
         <div class="popBtn_warm_pop popBtn" v-cloak>
             <slot name="btn"></slot>
 
-            <z-button type="primary" plain @click="close" v-show="isCancle" class="cancle_warm_pop">取消</z-button>
+            <el-button type="primary" plain @click="close" v-show="isCancle" class="cancle_warm_pop">取消</el-button>
         </div>
     </div>
 </div>

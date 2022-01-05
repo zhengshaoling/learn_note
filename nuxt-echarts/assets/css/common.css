@@ -1,3 +1,4 @@
+/* ************************** 渐变背景色配置 开始 ************************** */
 @property --colorA {
   syntax: '<color>';
   inherits: false;
@@ -22,6 +23,14 @@
     animation: change 10s infinite linear;
 }
 
+.dark-linear-gradient-bg {
+    background: linear-gradient(120deg,
+        var(--colorA),
+        var(--colorC),
+        var(--colorF));
+    animation: changeDark 10s infinite linear;
+}
+
 @keyframes change {
     20% {
         --colorA: red;
@@ -43,4 +52,183 @@
         --colorC: #0ebeff;
         --colorF: #efc371;
     }
+}
+@keyframes changeDark {
+    20% {
+        --colorA: #030753;
+        --colorC: #2e6ca4;
+        --colorF: #28cccc;
+    }
+    40% {
+        --colorA: #2b2f70;
+        --colorC: #056429;
+        --colorF: #1a18aa;
+    }
+    60% {
+        --colorA: #5b62ee;
+        --colorC: #72a81a;
+        --colorF: #2d037a;
+    }
+    80% {
+        --colorA: #1675c2;
+        --colorC: #001068;
+        --colorF: #10755f;
+    }
+}
+
+/* 深灰色字体颜色 */
+.dark-gray {
+	color: #333;
+}
+/* 二级文字颜色 */
+.gray {
+	color: #666;
+}
+/* 三级文字颜色 */
+.light-gray {
+	color: #999;
+}
+/* 白色字体 */
+.white {
+	color: #fff; 
+}
+.light {
+	color: #f2f2f2; 
+}
+.red{
+	color: #E94637;
+}
+
+
+
+/*  -- flex弹性布局 -- */
+.flex {
+	display: flex;
+}
+
+.basis-xs {
+	flex-basis: 20%;
+}
+
+.basis-sm {
+	flex-basis: 40%;
+}
+
+.basis-df {
+	flex-basis: 50%;
+}
+
+.basis-lg {
+	flex-basis: 60%;
+}
+
+.basis-xl {
+	flex-basis: 80%;
+}
+
+.flex-sub {
+	flex: 1;
+}
+
+.flex-twice {
+	flex: 2;
+}
+
+.flex-treble {
+	flex: 3;
+}
+
+.flex-direction {
+	flex-direction: column;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.align-start {
+	align-items: flex-start;
+}
+
+.align-end {
+	align-items: flex-end;
+}
+
+.align-center {
+	align-items: center;
+}
+
+.align-stretch {
+	align-items: stretch;
+}
+.align-baseline {
+	align-items: baseline;
+}
+
+.self-start {
+	align-self: flex-start;
+}
+
+.self-center {
+	align-self: flex-center;
+}
+
+.self-end {
+	align-self: flex-end;
+}
+
+.self-stretch {
+	align-self: stretch;
+}
+
+.align-stretch {
+	align-items: stretch;
+}
+
+.justify-start {
+	justify-content: flex-start;
+}
+
+.justify-end {
+	justify-content: flex-end;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.justify-between {
+	justify-content: space-between;
+}
+
+.justify-around {
+	justify-content: space-around;
+}
+
+
+/* 一行超出省略号 */
+.text-cut {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;                     
+}
+/* 一行超出省略号 */
+.text-cut2 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2
+}
+
+
+/* 对齐 */
+.text-center {
+	text-align: center;
+}
+.text-left {
+	text-align: left;
+}
+.text-right {
+	text-align: right;
 }

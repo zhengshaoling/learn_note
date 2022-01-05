@@ -8,13 +8,13 @@
 -->
 <template>
     <div id="admin">
-        <z-button size="large" @click="navToHome" class="mr10">回到首页</z-button>
-        <z-button type="primary" size="large" @click="openDialog">测试 head title</z-button>
+        <el-button size="large" @click="navToHome" class="mr10">回到首页</el-button>
+        <el-button type="primary" size="large" @click="openDialog">测试 head title</el-button>
 
         <warm-pop :pop="dialogVisible" title="测试弹窗title" centerTitle="测试弹窗centerTitle" :closeImg="true" :icon="0"
                 @close="dialogVisible = false">
-          <z-button slot="btn" type="warning" @click="test">确定</z-button>
-          <z-button slot="btn" @click="dialogVisible = false">取消</z-button>
+          <el-button slot="btn" type="warning" @click="test">确定</el-button>
+          <el-button slot="btn" @click="dialogVisible = false">取消</el-button>
       </warm-pop>
 
     </div>
@@ -52,7 +52,7 @@ export default {
             this.$message.success('操作成功')
         },
         navToHome() {
-            window.location.href = '/'
+            this.$router.push('/');
         }
 
     }
