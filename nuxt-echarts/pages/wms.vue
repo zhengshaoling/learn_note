@@ -1,7 +1,13 @@
 <template>
         <div class="wms dark-linear-gradient-bg">
-                <box width="50%" height="150px" custom-class="flex align-center justify-center">
-                        <simple-txt slot="main"></simple-txt>
+                <box width="80%" height="150px" custom-class="flex align-center justify-center" title="边框组件标题">
+                        <div class="flex align-center justify-around mt-40" slot="main">
+                                <simple-txt></simple-txt>
+                                <simple-txt></simple-txt>
+                                <simple-txt></simple-txt>
+                                <simple-txt></simple-txt>
+                        </div>
+                        
                 </box>
                 <div class="blank"></div>
                 <box width="80%" height="300px" custom-class="flex align-center justify-center">

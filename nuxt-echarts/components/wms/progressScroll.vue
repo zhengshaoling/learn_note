@@ -163,7 +163,7 @@ export default {
         height: 170px;
         width: 3440px;
         transition: all 0.5s;
-        // animation: swiper 80s linear infinite;
+        animation: swiper 80s linear infinite;
         display: flex;
         align-items: center;
         flex-direction: row;

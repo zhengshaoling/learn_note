@@ -1,6 +1,6 @@
 <template>
         <div class="part-box" :style="{width: width, height: height }" :class="customClass">        
-                <div :class="['top-title', title ? 'title-before' : '']"></div>                        
+                <div :class="['top-title', title ? 'title-before' : '']">{{title}}</div>                        
                 <div class="left-top"></div>
                 <div class="right-top"></div>
                 <div class="left-bottom"></div>
@@ -87,7 +87,7 @@ export default {
         border-top: none;
         border-left: none;
 }
-.title_before {
+.title-before {
         position: absolute;
         height: 35px;
         top: 0;
@@ -102,7 +102,7 @@ export default {
         color: #17caf0;
         text-align: center;
 }
-.title_before::after {
+.title-before::after {
         position: absolute;
         content: '';
         background: url(~/assets/img/components/title-right.png) no-repeat;
@@ -111,7 +111,7 @@ export default {
         width: 50px;
         height: 35px;
 }
-.title_before::before {
+.title-before::before {
         position: absolute;
         content: '';
         background: url(~/assets/img/components/title-left.png) no-repeat;
