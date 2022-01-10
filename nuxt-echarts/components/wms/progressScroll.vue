@@ -23,7 +23,7 @@
                 </div>
                 <div class="right-box">
                         <div class="swiper-box">
-                                <div v-for="item in 3" :key="item" class="swiper-list">
+                                <div v-for="item in 8" :key="item" class="swiper-list">
                                         <div class="right-title">北京物流仓</div>
                                         <div v-for="i in 4" :key="i" class="row">
                                                 <div class="row-title light">

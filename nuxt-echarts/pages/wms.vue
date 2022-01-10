@@ -13,32 +13,32 @@
                 <box width="80%" height="300px" custom-class="flex align-center justify-center">
                         <progress-scroll slot="main"></progress-scroll>       
                 </box>
+                <div class="blank"></div>
+                <box width="80%" height="300px" custom-class="flex align-center justify-center">
+                        <bar-pie slot="main" :my-property="barPieConfig"></bar-pie>       
+                </box>
         </div>
 </template>
 <script>
 import box from '@/components/common/box.vue'
 import simpleTxt from '@/components/wms/simpleTxt.vue'
 import progressScroll from '~/components/wms/progressScroll.vue'
+import barPie from '@/components/wms/barPie.vue'
+import { barPieConfig } from '@/components/wms/barPieConfig.js'
 
 export default{
         name: 'wms',
-        components: { simpleTxt, progressScroll, box },
+        components: { simpleTxt, progressScroll, box, barPie },
         data() {
                 return {
-
+                        barPieConfig
                 }
-        },
-        mounted() {
-
-        },
-        methods: {
-
         }
 }
 </script>
 <style lang="scss" scoped>
 .wms {
-        display: flex;
+        display: flex; 
         align-items: center;
         justify-content: center; 
         flex-direction: column;

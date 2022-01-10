@@ -6,17 +6,17 @@
  * @Description: In User Settings Edit
  * @FilePath: \nuxt-seo\nuxt.config.js
  */
-let ENV_BASE_API = 'http://10.88.20.14:8523/'; // 请求路径
-let BASE_IMG_PATH = '/img/' // 静态图片资源
+const NUXT_ENV = {
+  NODE_ENV: process.env.NODE_ENV,
+  VUE_APP_BASE_URL: process.env.VUE_APP_BASE_URL,
+  VUE_APP_BASE_PORT: process.env.VUE_APP_BASE_PORT,
+  VUE_APP_SERVER_API: process.env.VUE_APP_SERVER_API,
+  BASE_IMG_PATH: process.env.BASE_IMG_PATH
+}
 
-// 测试环境
-if(process.env.NODE_ENV == 'test') {
-  ENV_BASE_API = '';
-}
-// 生产环境
-if(process.env.NODE_ENV == 'prod') {
-  ENV_BASE_API = '' ;
-}
+const ENV_BASE_API = `${NUXT_ENV.VUE_APP_BASE_URL}${NUXT_ENV.VUE_APP_BASE_PORT ? ':' + NUXT_ENV.VUE_APP_BASE_PORT : ''}`
+let BASE_IMG_PATH = `${NUXT_ENV.BASE_IMG_PATH}` // 静态图片资源
+
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -79,6 +79,8 @@ export default {
     port: 8523,
     host: '0.0.0.0'
   },
+  env: NUXT_ENV,
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],

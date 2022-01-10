@@ -1,9 +1,251 @@
 学习笔记
 =========
 
+2022年1月7日
+--------------
+
+### [echarts大屏使用合集](./nuxt-echarts)
 2021年12月8日
 ---------------
 ### 关于package.json
+```json
+{
+  "name": "项目名称",
+  "version": "项目版本",
+  "private": true, // 私有项目
+  // 脚本命令
+  "scripts": { 
+    "dev": "cross-env process.env.ENV=dev nuxt",
+    "prod": "cross-env process.env.ENV=production nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": "50913"
+    }
+  },
+  // 生产环境依赖
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/proxy": "^2.1.0",
+    "@popperjs/core": "^2.9.2",
+    "bootstrap": "^3.3.7",
+    "bootstrap-vue": "^2.21.2",
+    "core-js": "^3.9.1",
+    "cross-env": "^7.0.3",
+    "jquery": "^2.1.1",
+    "js-cookie": "^2.2.1",
+    "js-md5": "^0.7.3",
+    "nuxt": "^2.15.3",
+    "popper.js": "^1.16.1",
+    "vuex": "^3.6.2",
+  },
+  // 开发环境依赖
+  "devDependencies": {
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "node-sass": "^6.0.0",
+    "prettier": "^2.2.1", // 用于美化代码
+    "nuxt-precompress": "^0.5.9", // nuxt配置代码压缩
+    "sass-loader": "^10.1.1",
+  }
+}
+
+```
+### nuxt.config.js一般用到的配置
+```javascript
+const webpack = require('webpack')
+
+const CompressionPlugin = require('compression-webpack-plugin') 
+
+const NUXT_ENV = {
+  NODE_ENV: process.env.NODE_ENV,
+  VUE_APP_BASE_URL: process.env.VUE_APP_BASE_URL,
+  VUE_APP_BASE_PORT: process.env.VUE_APP_BASE_PORT,
+  VUE_APP_SERVER_API: process.env.VUE_APP_SERVER_API,
+  VUE_APP_WS_URL: process.env.VUE_APP_WS_URL,
+  VUE_APP_WS_PORT: process.env.VUE_APP_WS_PORT,
+  VUE_APP_WEBSOCKET_API: process.env.VUE_APP_WEBSOCKET_API,
+  VUE_APP_IMG_URL: process.env.VUE_APP_IMG_URL || ''
+}
+
+const APP_BASE_URL = `${NUXT_ENV.VUE_APP_BASE_URL}${NUXT_ENV.VUE_APP_BASE_PORT ? ':' + NUXT_ENV.VUE_APP_BASE_PORT : ''}`
+const APP_WS_URL = `${NUXT_ENV.VUE_APP_WS_URL}${NUXT_ENV.VUE_APP_WS_PORT ? ':' + NUXT_ENV.VUE_APP_WS_PORT : ''}`
+
+// import $ from 'jquery'
+export default {
+  // Global page headers: https://go.nuxtjs.dev/config-head
+  head: {
+    title: '项目标题', // 全局配置，支持在page钩子里单独配置
+    htmlAttrs: {
+      lang: 'zh-CN'
+    },
+    meta: [
+      { charset: 'utf-8' },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no'
+      },
+      // SDK配置，page中可自定义，用于SEO
+      { hid: 'description', name: 'description', content: '' }
+    ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', type: 'text/css', href: '/bootstrap/bootstrap.min.css' },
+      { rel: 'stylesheet', type: 'text/css', href: '/bootstrapvalidator0.5.3/css/bootstrapValidator.css' }
+    ],
+    script: [
+      { src: '/jquery2.1.1/jquery.min.js' },
+      { src: '/bootstrap/bootstrap.min.js' },
+      { src: '/bootstrapvalidator0.5.3/js/bootstrapValidator.min.js' }
+    ]
+  },
+
+  // Global CSS: https://go.nuxtjs.dev/config-css
+  css: [
+    'assets/scss/all.scss'
+  ],
+
+  // 自定义loading
+  // loading: {
+  //   color: rgb(112, 79, 160)
+  // },
+  loading: '~/components/common/loading.vue',
+
+  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+  plugins: [
+    { src: '~/plugins/common.js', ssr: true }, // 全局配置入口，该文件中的配置在服务端和客户端生效
+    { src: '~/plugins/commonWithoutSSR.js', ssr: false }, // 全局配置入口，该文件中的配置只在客户端生效
+    { src: '~/plugins/initial.css', ssr: true }, // 样式文件
+    { src: '~/plugins/lib/util', ssr: true }, // 用于注册公用方法
+    { src: '~/plugins/lib/protoFun', ssr: true } // 用于增加原型方法
+  ],
+
+  // Auto import components: https://go.nuxtjs.dev/config-components
+  components: true,
+
+  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+  buildModules: [],
+
+  // Modules: https://go.nuxtjs.dev/config-modules
+  modules: [
+    // 配置压缩代码
+    'nuxt-precompress',
+    // https://go.nuxtjs.dev/bootstrap
+    'bootstrap-vue/nuxt',
+    '@nuxtjs/proxy',
+    // https://go.nuxtjs.dev/axios
+    '@nuxtjs/axios',
+    '@nuxtjs/style-resources'
+  ],
+  // 配置代码压缩 https://www.npmjs.com/package/nuxt-precompress
+  nuxtPrecompress: {
+    enabled: true, // Enable in production
+    report: false, // set true to turn one console messages during module init
+    test: /\.(js|css|html|txt|xml|svg)$/, // files to compress on build
+    // Serving options
+    middleware: {
+      // You can disable middleware if you serve static files using nginx...
+      enabled: true,
+      // Enable if you have .gz or .br files in /static/ folder
+      enabledStatic: true,
+      // Priority of content-encodings, first matched with request Accept-Encoding will me served
+      encodingsPriority: ['br', 'gzip']
+    },
+    // build time compression settings
+    gzip: {
+      // should compress to gzip?
+      enabled: true,
+      // compression config
+      // https://www.npmjs.com/package/compression-webpack-plugin
+      filename: '[path].gz[query]', // middleware will look for this filename
+      threshold: 10240,
+      minRatio: 0.8,
+      compressionOptions: { level: 9 }
+    },
+    brotli: {
+      // should compress to brotli?
+      enabled: true,
+      // compression config
+      // https://www.npmjs.com/package/compression-webpack-plugin
+      filename: '[path].br[query]', // middleware will look for this filename
+      compressionOptions: { level: 11 },
+      threshold: 10240,
+      minRatio: 0.8
+    }
+  },
+
+  styleResources: {
+    scss: [
+      '~/assets/scss/all.scss' // 全局 scss 变量
+    ]
+  },
+
+  // 配置代理
+  axios: {
+    proxy: true
+  },
+  // 从上到下顺序匹配，先匹配到哪个就走对应的代理
+  proxy: {
+    // 一般请求的转发
+    '/service': {
+      target: APP_BASE_URL
+    },
+    // 用于websocket转发
+    '/wservice': {
+      target: APP_WS_URL,
+      ws: true
+    },
+    // 用于图片、excel等文件的预览
+    '/file': {
+      target: APP_BASE_URL,
+      pathRewrite: {
+        '^/file': '/file'
+      }
+    }
+  },
+  // 配置服务启动的端口号和IP访问形式
+  server: {
+    port: '50913',
+    host: '0.0.0.0'
+  },
+  // mode: "universal",
+  // 配置env,通过此配置，可在page、js文件中通过process.env.XXX 获取环境变量
+  env: NUXT_ENV,
+  // 开启devtools 调试模式
+  vue: {
+    config: {
+      productionTip: true,
+      devtools: true
+    }
+  },
+  // build构建参数
+  build: {
+    analyse: true,
+    plugins: [
+      new CompressionPlugin({
+        test: /\.js$|\.html$|\.css/, // 匹配文件名
+        threshold: 10240, // 对超过10kb的数据进行压缩
+        deleteOriginalAssets: false // 是否删除原文件
+      })
+    ],
+    optimization: {
+      splitChunks: {
+        minSize: 10000,
+        maxSize: 250000
+      }
+    },
+    vendor: ['axios'],
+    // md文件编辑器： 去掉这个的话，会报无法引入外部资源的错
+    transpile: ['vue-meditor'],
+    cache: true
+  }
+}
+
+```
 
 2021年9月3日
 ----------------

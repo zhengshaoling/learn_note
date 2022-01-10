@@ -41,11 +41,6 @@ export default {
                 }
         }
     },
-    data: function () {},
-    mounted: function () {},
-    computed: {},
-    watch:{},
-    methods: {}
 }
 </script>
 <style lang="scss" scoped>
