@@ -33,8 +33,8 @@ export default {
                                         caption: '',
                                         left: '0',
                                         top: '0',
-                                        width: '200',
-                                        height: '200',
+                                        width: '100%',
+                                        height: '80%',
                                         droppable: '',
                                         timer: 3000,
                                         timelinecolor: '#19A6FF',
@@ -189,9 +189,12 @@ export default {
                 },
                 setOption() {
                         this.myChart.setOption(this.option);
-                        this.interval = setInterval(()=>{
-                                this.refreshLegend();
-                        }, 3000)
+                        setTimeout(()=>{
+                                this.interval = setInterval(()=>{
+                                        this.refreshLegend();
+                                }, 3000)
+                        }, 200)
+                        
                 },
                 refreshLegend() {
                         this.num = ++this.num > 2 ? 0: this.num;
@@ -237,7 +240,12 @@ export default {
                                         clockwise: false, 
                                         center: ['85%', '25%'], 
                                         radius: this.myProperty["seriespieradius"],
-                                        z: 100, label: { color: this.myProperty["seriepielabel"], fontSize: this.myProperty["seriepielabelfont"], formatter: '{b} {d}' + '%' }
+                                        z: 100, 
+                                        label: { 
+                                                // color: this.myProperty["seriepielabel"], 
+                                                fontSize: this.myProperty["seriepielabelfont"], 
+                                                formatter: '{b} {d}' + '%' 
+                                        }
                                 };
                                 if (i < 3) {
                                         item["itemStyle"]["color"] = colors[i];
@@ -311,7 +319,7 @@ export default {
                         return options;
                 },
         },
-        destroyed() {
+        beforeDestroy() {
                 clearInterval(this.interval);
                 this.interval = null;
         }
@@ -320,7 +328,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .bar-pie {
-        width: inherit;
+        width: 100%;
         height: inherit;
 }
 .title-box {
@@ -383,6 +391,6 @@ export default {
 }
 .line-chart {
         width: 100%;
-        height: 75%;
+        height: 80%;
 }
 </style>

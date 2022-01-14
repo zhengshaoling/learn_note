@@ -1,6 +1,6 @@
 <template>
         <div class="wms dark-linear-gradient-bg">
-                <box width="80%" height="150px" custom-class="flex align-center justify-center" title="边框组件标题">
+                <box width="50%" height="150px" custom-class="flex align-center justify-center" title="边框组件标题">
                         <div class="flex align-center justify-around mt-40" slot="main">
                                 <simple-txt></simple-txt>
                                 <simple-txt></simple-txt>
@@ -10,11 +10,11 @@
                         
                 </box>
                 <div class="blank"></div>
-                <box width="80%" height="300px" custom-class="flex align-center justify-center">
+                <box width="50%" height="300px" custom-class="flex align-center justify-center">
                         <progress-scroll slot="main"></progress-scroll>       
                 </box>
                 <div class="blank"></div>
-                <box width="80%" height="300px" custom-class="flex align-center justify-center">
+                <box width="50%" height="300px" custom-class="flex align-center justify-center">
                         <bar-pie slot="main" :my-property="barPieConfig"></bar-pie>       
                 </box>
         </div>

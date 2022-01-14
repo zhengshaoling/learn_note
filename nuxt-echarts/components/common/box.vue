@@ -51,6 +51,7 @@ export default {
         background-color: #091223;
         box-shadow: inset 0px 0px 59px 0px rgba(14, 62, 184, .2);
         border: solid 1px #123d72;
+        min-width: 945px;
 }
 .left-top, .right-top, .left-bottom, .right-bottom {
         width: 11px;
