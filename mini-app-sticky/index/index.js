@@ -10,6 +10,7 @@ Page({
 
   onLoad() {
     let model = wx.getSystemInfoSync().model;
+    return;
     let isIPhone = model.indexOf('iPhone') > -1 || false;
     this.setData({
       isIPhone

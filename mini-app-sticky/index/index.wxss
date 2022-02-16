@@ -29,6 +29,7 @@
   background: #F0F7FB;
   border-top: 1rpx solid #E1EEF8;
   border-bottom: 1rpx solid #E1EEF8;
+  padding-left: 20rpx;
 }
 .item {
   width: 200rpx;
@@ -58,6 +59,7 @@
 .block2 .header {
   display: inline-flex;
   line-height: 90rpx;
+  height: 86rpx;
   position: sticky;
   top: 0;
   background: #F0F7FB;
@@ -88,11 +90,11 @@
   height: 90rpx;
 }
 .border-top {
-  border-top: 1rpx solid #eee;
+  border-top: 2rpx solid #eee;
 
 }
 .border-bottom {
-  border-bottom: 1rpx solid #eee;
+  border-bottom: 2rpx solid #eee;
   margin-bottom: -1rpx;
 }
 .zhanwei {
